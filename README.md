@@ -32,7 +32,7 @@ touch index.js
 
 ```js
 const express = require("express");
-const pino = require("pino-http")();
+const morgan = require("morgan");
 const cors = require("cors");
 
 const app = express();
@@ -40,10 +40,10 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
-app.use(pino);
+app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
-  res.send("Hello Express");
+  res.json({ msg: "Hello Express" });
 });
 
 app.listen(3000, () => {
@@ -62,18 +62,22 @@ mkdir prisma && touch ./prisma/schema.prisma
 ```prisma
 datasource db {
   provider = "sqlite"
-  url      = "file:./dev.db"
+  url      = "file:../db/dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
 }
 ```
 
 ##### Note
 
-8. Whenever you make changes to your database that are reflected in the Prisma schema, you need to manually re-generate Prisma Client to update the generated code in the `node_modules/.prisma/client` directory:
+9. Whenever you make changes to your database that are reflected in the Prisma schema, you need to manually re-generate Prisma Client to update the generated code in the `node_modules/.prisma/client` directory and update the `migration`:
 
 ```sh
 npx prisma generate
 ```
 
 ```sh
-npx prisma migrate
+npx prisma migrate dev
 ```
