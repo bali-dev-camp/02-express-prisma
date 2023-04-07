@@ -25,6 +25,7 @@ class ShoeController {
         name: req.body.name,
         merk: req.body.merk,
         qty: req.body.qty,
+        available: req.body.available,
       },
     });
     res.status(201).json(result);
