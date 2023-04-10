@@ -18,7 +18,7 @@ npm init -y
 3. Install the library
 
 ```sh
-npm install express @prisma/client pino cors bcrypt jsonwebtoken
+npm install express @prisma/client morgan cors bcrypt jsonwebtoken
 npm install prisma nodemon dotenv --save-dev
 ```
 
