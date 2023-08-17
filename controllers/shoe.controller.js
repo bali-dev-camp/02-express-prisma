@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 class ShoeController {
@@ -13,7 +13,7 @@ class ShoeController {
     });
 
     if (result === null) {
-      res.status(404).json({ msg: "Data not found" });
+      res.status(404).json({ msg: 'Data not found' });
     } else {
       res.status(200).json(result);
     }
@@ -24,8 +24,8 @@ class ShoeController {
       data: {
         name: req.body.name,
         merk: req.body.merk,
-        qty: req.body.qty,
-        available: req.body.available,
+        qty: Number(req.body.qty),
+        available: req.body.available === 'true' ? true : false,
       },
     });
     res.status(201).json(result);
@@ -39,7 +39,8 @@ class ShoeController {
       data: {
         name: req.body.name,
         merk: req.body.merk,
-        qty: req.body.qty,
+        qty: Number(req.body.qty),
+        available: req.body.available === 'true' ? true : false,
       },
     });
     res.status(200).json(result);
