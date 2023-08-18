@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 class ShoeController {
@@ -13,7 +13,7 @@ class ShoeController {
     });
 
     if (result === null) {
-      res.status(404).json({ msg: 'Data not found' });
+      res.status(404).json({ msg: "Data not found" });
     } else {
       res.status(200).json(result);
     }
@@ -24,23 +24,33 @@ class ShoeController {
       data: {
         name: req.body.name,
         merk: req.body.merk,
+        desc: req.body.desc,
+        price: Number(req.body.price),
         qty: Number(req.body.qty),
-        available: req.body.available === 'true' ? true : false,
+        available:
+          (req.body.available === "true") | req.body.available ? true : false,
       },
     });
     res.status(201).json(result);
   }
 
   static async editShoe(req, res) {
+    console.log(req.body);
     const result = await prisma.shoe.update({
       where: {
         id: Number(req.params.id),
       },
       data: {
-        name: req.body.name,
-        merk: req.body.merk,
-        qty: Number(req.body.qty),
-        available: req.body.available === 'true' ? true : false,
+        name: req.body.name ?? undefined,
+        merk: req.body.merk ?? undefined,
+        desc: req.body.desc ?? undefined,
+        price: req.body.price ? Number(req.body.price) : undefined,
+        qty: req.body.qty ? Number(req.body.qty) : undefined,
+        available: req.body.available
+          ? (req.body.available === "true") | req.body.available
+            ? true
+            : false
+          : undefined,
       },
     });
     res.status(200).json(result);

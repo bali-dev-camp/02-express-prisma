@@ -13,6 +13,8 @@ model Shoe {
   updatedAt DateTime @updatedAt
   name      String
   merk      String
+  desc      String
+  price     Int
   qty       Int
   available Boolean
 }
