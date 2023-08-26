@@ -1,6 +1,7 @@
 const { Router } = require("express");
 
 const shoeRouter = require("./shoe.router");
+const categoryRouter = require("./category.router");
 
 const router = Router();
 
@@ -9,5 +10,6 @@ router.get("/", (req, res) => {
 });
 
 router.use(shoeRouter);
+router.use(categoryRouter);
 
 module.exports = router;
