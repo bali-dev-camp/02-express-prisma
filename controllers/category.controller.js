@@ -19,10 +19,10 @@ class CategoryController {
     } catch (err) {
       if (err.code === "P2002") {
         return res
-          .code(400)
+          .status(400)
           .json({ message: "A category with this name is already in use" });
       } else {
-        return res.code(400).json({ message: "Something error" });
+        return res.status(400).json({ message: "Something error", err });
       }
     }
   }
@@ -41,23 +41,28 @@ class CategoryController {
       res.status(200).json(result);
     } catch (err) {
       if (err.code === "P2002") {
-        return res
-          .code(400)
-          .json({ message: "A category with this name is already in use" });
+        return res.status(400).json({
+          message: "A category with this name is already in use",
+          err,
+        });
       } else {
-        return res.code(400).json({ message: "Something error" });
+        return res.status(400).json({ message: "Something error", err });
       }
     }
   }
 
   static async deleteCategory(req, res) {
-    const result = await prisma.category.delete({
-      where: {
-        id: Number(req.params.id),
-      },
-    });
+    try {
+      const result = await prisma.category.delete({
+        where: {
+          id: Number(req.params.id),
+        },
+      });
 
-    res.status(200).json(result);
+      res.status(200).json(result);
+    } catch (err) {
+      return res.status(400).json({ message: "Something error", err });
+    }
   }
 }
 
