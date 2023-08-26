@@ -7,6 +7,22 @@ class CategoryController {
     res.status(200).json(result);
   }
 
+  static async getDetailCategory(req, res) {
+    try {
+      const result = await prisma.category.findUnique({
+        where: { id: Number(req.params.id) },
+      });
+
+      if (result === null) {
+        res.status(404).json({ msg: "Data not found" });
+      } else {
+        res.status(200).json(result);
+      }
+    } catch (err) {
+      return res.status(400).json({ message: "Something error", err });
+    }
+  }
+
   static async addCategory(req, res) {
     try {
       const result = await prisma.category.create({
